@@ -1,7 +1,7 @@
 
-profiles.yml
-target/
-dbt_packages/
+**/profiles.yml
+aw_analytics/target/
+aw_analytics/dbt_packages/
 logs/
 
 
@@ -10,7 +10,7 @@ __pycache__/
 *.pyc
 
 
-AW_PostgreSql/AdventureWorks-oltp-install-script.zip
+AdventureWorks-oltp-install-script.zip
 
 
 .env
