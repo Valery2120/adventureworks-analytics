@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_sales__salesorderheader
+    description: "Cleaned sales order headers from adventureworks."
+    columns:
+      - name: sales_order_id
+        description: "Primary key of the sales order."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__salesorderdetail
+    description: "Cleaned sales order line items with calculated line_total."
+    columns:
+      - name: sales_order_detail_id
+        description: "Primary key of the order detail line."
+        tests:
+          - unique
+          - not_null
+      - name: sales_order_id
+        description: "Foreign key to the sales order header."
+        tests:
+          - not_null
+
+  - name: stg_production__product
+    description: "Staging model for products."
+    columns:
+      - name: product_id
+        description: "Primary key for products."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_person__person
+    description: "Staging model for people (names and contact info)."
+    columns:
+      - name: business_entity_id
+        description: "Primary key linked to employees, customers, etc."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__customer
+    description: "Staging model for customers."
+    columns:
+      - name: customer_id
+        description: "Primary key for customers."
+        tests:
+          - unique
