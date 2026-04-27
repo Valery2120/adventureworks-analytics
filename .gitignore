@@ -1,16 +1,20 @@
 
-**/profiles.yml
+aw_analytics/profiles.yml
 aw_analytics/target/
 aw_analytics/dbt_packages/
-logs/
-
+aw_analytics/logs/
+aw_analytics/dbt_packages/
+aw_analytics/dbt_modules/
 
 venv/
 __pycache__/
 *.pyc
 
-
+.idea/
 AdventureWorks-oltp-install-script.zip
-
+Aw_postgresql/
+aw_postgresql/original_backups/
+clean_data.py
+clean_data1.py
 
 .env
