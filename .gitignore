@@ -13,7 +13,6 @@ __pycache__/
 .idea/
 AdventureWorks-oltp-install-script.zip
 Aw_postgresql/
-aw_postgresql/original_backups/
 clean_data.py
 clean_data1.py
 
