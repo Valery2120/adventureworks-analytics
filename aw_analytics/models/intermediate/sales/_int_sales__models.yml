@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: int_sales__order_items_joined
+    description: "The primary financial model combining headers and details. Calculated fields: Gross Margin and Lead Time."
+    columns:
+      - name: sales_order_id
+        tests:
+          - not_null
+      - name: gross_profit
+        description: "Revenue minus standard cost (calculated at the time of sale)."
+        tests:
+          - not_null
+      - name: actual_lead_time_days
+        description: "Days between order date and ship date."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0" 
+
+  - name: int_sales__customers_enriched
+    description: "Unified customer profile solving the Person vs Store logic."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Individual', 'Reseller', 'Unknown']
+
+  - name: int_sales__order_reasons_aggregated
+    description: "Aggregated sales reasons to prevent row duplication in financial reports."
+    columns:
+      - name: sales_order_id
+        tests:
+          - unique
+  
+  - name: int_sales__salespersons_enriched
+    description: >
+      Unified sales representative profile. 
+      Joins SalesPerson, Employee, and Person data with their latest Sales Quota.
+      Calculates quota attainment percentage.
+    columns:
+      - name: salesperson_id
+        tests:
+          - unique
+          - not_null
+      - name: salesperson_name
+        description: "Full name of the sales representative."
+        tests:
+          - not_null
+      - name: job_title
+        description: "Official job title from Human Resources."
+      - name: current_quota
+        description: "The most recent sales target amount assigned to the rep."
+      - name: actual_sales_ytd
+        description: "Year-to-date sales figure from the sales system."
+      - name: quota_attainment_pct
+        description: "Calculated field: (actual_sales_ytd / current_quota) * 100."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"

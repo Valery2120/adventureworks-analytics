@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_production__products
+    description: "Product master data including costs and physical attributes."
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: standard_cost
+        tests:
+          - not_null
+
+  - name: stg_production__product_categories
+    description: "High-level product groupings (Bikes, Accessories, etc.)."
+    columns:
+      - name: product_category_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_production__product_subcategories
+    description: "Specific product groupings (Mountain Bikes, Road Bikes)."
+    columns:
+      - name: product_subcategory_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_production__unit_measures
+    description: "Lookup table for measurement codes (CM, LB, KG)."
+    columns:
+      - name: unit_measure_code
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_production__product_cost_histories
+    description: "Historical cost data for accurate margin analysis (CFO requirement)."
+    columns:
+      - name: product_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_production__products')
+                field: product_id

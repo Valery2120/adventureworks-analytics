@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_humanresources__employees
+    description: "Internal staff data including job titles and hire dates."
+    columns:
+      - name: employee_id
+        tests:
+          - unique
+          - not_null

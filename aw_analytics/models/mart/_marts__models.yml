@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: fct_sales
+    description: "Central fact table containing all sales transactions, profit metrics, and logistics KPIs."
+    columns:
+      - name: sales_order_detail_id
+        tests:
+          - unique
+          - not_null
+      - name: gross_profit
+        tests:
+          - not_null
+      - name: actual_lead_time_days
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+
+  - name: dim_customers
+    description: "Customer dimension table with B2B/B2C segmentation."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Individual', 'Reseller', 'Unknown']
+
+  - name: dim_products
+    description: "Product dimension with full category hierarchy for drill-down analysis."
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        tests:
+          - not_null
+
+  - name: dim_salespersons
+    description: "Sales representatives dimension including their latest performance targets (Quotas)."
+    columns:
+      - name: salesperson_id
+        tests:
+          - unique
+          - not_null
+      - name: quota_attainment_pct
+        description: "Percentage of sales target achieved."

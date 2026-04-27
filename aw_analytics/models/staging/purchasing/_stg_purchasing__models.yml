@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_purchasing__ship_methods
+    description: "Shipping methods used for logistics KPI analysis."
+    columns:
+      - name: ship_method_id
+        tests:
+          - unique
+          - not_null

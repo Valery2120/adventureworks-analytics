@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_person__persons
+    description: "Individual contact details for customers and employees."
+    columns:
+      - name: person_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_person__addresses
+    description: "Physical address details for regional analysis."
+    columns:
+      - name: address_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_person__business_entity_addresses
+    description: "Bridge table linking entities to their locations."

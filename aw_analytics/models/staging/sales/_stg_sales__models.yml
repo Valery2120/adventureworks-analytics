@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: stg_sales__order_headers
+    description: "Cleaned sales order headers. Used for revenue and cycle time analysis."
+    columns:
+      - name: sales_order_id
+        tests:
+          - unique
+          - not_null
+      - name: order_status_code
+        description: "Status: 1=In process, 2=Approved, 3=Backordered, 4=Rejected, 5=Shipped."
+        tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+      - name: customer_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales__customers')
+                field: customer_id
+      - name: modified_date
+        description: "The timestamp when the record was last updated."
+
+  - name: stg_sales__order_details
+    description: "Line items for each sales order. Basis for product margin calculations."
+    columns:
+      - name: sales_order_detail_id
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_production__products')
+                field: product_id
+
+  - name: stg_sales__customers
+    description: "Customer master data linking to individuals or stores."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__salespersons
+    description: "Sales representatives data for performance tracking."
+    columns:
+      - name: salesperson_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__sales_quotas
+    description: "Sales targets for reps. Required for Revenue vs Target KPI."
+    columns:
+      - name: salesperson_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales__salespersons')
+                field: salesperson_id
+
+  - name: stg_sales__sales_territories
+    description: "Sales territory lookup for geographic analysis."
+    columns:
+      - name: territory_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__special_offers
+    description: "Marketing promotions and discounts."
+    columns:
+      - name: special_offer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__currency_rates
+    description: "Exchange rates for USD conversion (CFO Requirement)."
+    columns:
+      - name: currency_rate_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__sales_reasons
+    description: "Descriptive names for sales reasons (e.g., Marketing, Review)."
+    columns:
+      - name: sales_reason_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_sales__order_sales_reasons
+    description: "Bridge table linking orders to reasons."
+    columns:
+      - name: sales_order_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_sales__order_headers')
+                field: sales_order_id

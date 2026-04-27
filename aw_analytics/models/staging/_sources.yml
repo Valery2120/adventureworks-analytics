@@ -1,30 +1,97 @@
 version: 2
 
 sources:
-  - name: sales          # The dbt reference name
-    schema: sales        # The actual schema name in PostgreSQL
+  - name: sales
+    description: "Raw sales data including orders, customers, and territory details."
+    schema: sales
     tables:
       - name: salesorderheader
-        description: "General sales order information."
+        description: "General sales order header information."
+        columns:
+          - name: salesorderid
+            tests:
+              - unique
+              - not_null
       - name: salesorderdetail
-        description: "Individual products associated with a specific sales order. See salesorderheader."
+        description: "Individual products associated with a specific sales order."
+        columns:
+          - name: salesorderdetailid
+            tests:
+              - unique
+              - not_null
       - name: customer
-        description: "Current customer information."
-      - name: specialoffer
-        description: "Sale discounts lookup table."     
+        description: "Customer information for both individuals and resellers."
+      - name: salesperson
+        description: "Sales representative data including commission and targets."
+      - name: salespersonquotahistory
+        description: "Sales quotas/targets for sales representatives."
       - name: salesterritory
-        description: "Sales territory lookup table."
+        description: "Sales territory lookup table used for geographic analysis."
+      - name: specialoffer
+        description: "Discount and promotional offer definitions."
       - name: currencyrate
-        description: "Currency exchange rates."
-
+        description: "Exchange rates used for multi-currency conversion to USD."
+      - name: salesorderheadersalesreason
+        description: "Bridge table linking orders to reason IDs."
+      - name: salesreason
+        description: "Lookup table containing the actual names of sales reasons (e.g., Marketing, Review)."
+        
   - name: production
+    description: "Product master data, categories, and manufacturing details."
     schema: production
     tables:
-      - name: product 
-        description: "Products sold or used in the manfacturing of sold products."
+      - name: product
+        description: "Master list of all products sold or used in manufacturing."
+        columns:
+          - name: productid
+            tests:
+              - unique
+              - not_null
+      - name: productcategory
+        description: "Broad product groupings (e.g., Bikes, Clothing)."
+      - name: productsubcategory
+        description: "Specific product groupings (e.g., Mountain Bikes, Road Bikes)."
+      - name: unitmeasure
+        description: "Lookup table for units of measure (weight, size, etc.)."
+      - name: productcosthistory
+        description: "Historical tracking of product standard costs for margin analysis."
 
   - name: person
+    description: "Personal and contact information for individuals involved with AdventureWorks."
     schema: person
     tables:
-      - name: person  
-        description: "Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts."
+      - name: person
+        description: "Details for all people, including employees and customers."
+        columns:
+          - name: businessentityid
+            tests:
+              - unique
+              - not_null
+      - name: address
+        description: "Physical address information."
+      - name: businessentityaddress
+        description: "Bridge table linking people or stores to specific addresses."
+
+  - name: purchasing
+    description: "Supply chain and logistics data."
+    schema: purchasing
+    tables:
+      - name: shipmethod
+        description: "Shipping methods and basic costs used for order fulfillment."
+        columns:
+          - name: shipmethodid
+            tests:
+              - unique
+              - not_null
+
+  - name: humanresources
+    description: "Employee and organizational structure data."
+    schema: humanresources
+    tables:
+      - name: employee
+        description: "Employee master data, including job titles and hire dates."
+        columns:
+          - name: businessentityid
+            tests:
+              - unique
+              - not_null

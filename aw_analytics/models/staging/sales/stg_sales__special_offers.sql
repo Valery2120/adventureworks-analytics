@@ -5,14 +5,16 @@ with source as (
 renamed as (
     select
         specialofferid as special_offer_id,
-        description,
-        discountpct as discount_percent,
-        type as discount_type,
-        category as discount_category,
+        description as offer_description,
+        discountpct as discount_percentage,
+        type as offer_type,
+        category as offer_category, 
         startdate as start_date,
         enddate as end_date,
         minqty as min_quantity,
-        maxqty as max_quantity
+        maxqty as max_quantity,
+        modifieddate as modified_date
+        
     from source
 )
 

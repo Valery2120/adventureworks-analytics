@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: int_production__products_enriched
+    description: >
+      This model creates a flat product hierarchy by joining Products, 
+      Subcategories, and Categories. It also calculates the potential unit profit.
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: category_name
+        description: "High-level category (e.g., Bikes, Accessories)."
+        tests:
+          - not_null
+      - name: subcategory_name
+        description: "Specific subcategory (e.g., Mountain Bikes)."
+      - name: potential_unit_profit
+        description: "The difference between List Price and Standard Cost."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0" 
