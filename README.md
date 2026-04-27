@@ -72,7 +72,7 @@ dbt docs generate
 dbt docs serve
 ```
 
-## Status
+## ✅ Status
 
 The project is **ready for integration with BI tools**.  
 All **29 models** have been successfully **compiled** and **deployed**.
