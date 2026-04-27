@@ -54,19 +54,23 @@ The project includes **78 automated tests** ensuring full data integrity:
 **1. Install dependencies:**
 ```bash
 dbt deps
+```bash
 
 **2. Build models (create tables/views in Postgres):**
 ```bash
 dbt run
+```bash
 
 **3. Run tests:**
 ```bash
 dbt test
+```bash
 
 **4. Generate and serve interactive docs + lineage graph:**
 ```bash
 dbt docs generate
 dbt docs serve
+```bash
 
 ## Status
 
