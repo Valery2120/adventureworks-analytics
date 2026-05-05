@@ -64,3 +64,13 @@ models:
           - dbt_utils.expression_is_true:
               arguments:
                 expression: ">= 0"
+    
+  - name: int_sales__special_offers_enriched
+    description: "An intermediate model for mapping promotions to products."
+    columns:
+      - name: special_offer_id
+        description: "Reference to the special offer."
+        tests:
+          - not_null
+      - name: product_id
+        description: "The specific product associated with the special offer."

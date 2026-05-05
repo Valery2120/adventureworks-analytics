@@ -16,6 +16,7 @@ select
     o.salesperson_id,
     o.territory_id,
     d.product_id,
+    d.special_offer_id,
     
     d.order_quantity,
     d.unit_price,

@@ -50,3 +50,33 @@ models:
           - not_null
       - name: quota_attainment_pct
         description: "Percentage of sales target achieved."
+  
+  - name: dim_territories
+    description: "Dimension table containing sales territory metadata, including regions and global groups."
+    columns:
+      - name: territory_id
+        description: "Primary key for the sales territory."
+        tests:
+          - unique
+          - not_null
+      - name: territory_name
+        description: "The name of the specific region (e.g., Northwest, France, Southwest)."
+      - name: territory_group
+        description: "The global geographic group (e.g., North America, Europe, Pacific)."
+
+  - name: dim_special_offers
+    description: "Dimension table providing details on unique marketing campaigns, seasonal discounts, and volume offers."
+    columns:
+      - name: special_offer_id
+        description: "Primary key for the special offer."
+        tests:
+          - unique
+          - not_null
+      - name: offer_name
+        description: "Description of the marketing program (e.g., 'Volume Discount 11 to 14')."
+      - name: discount_pct
+        description: "The discount percentage represented as a decimal (e.g., 0.15 for 15%)."
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"

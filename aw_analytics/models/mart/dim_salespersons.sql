@@ -10,7 +10,7 @@ select
     job_title,
     commission_percent,
     bonus,
-    -- Financial targets and current progressФинансовые цели и текущий прогресс
+    -- Financial targets and current progress
     current_quota,
     actual_sales_ytd,
     quota_attainment_pct,

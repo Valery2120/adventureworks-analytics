@@ -15,6 +15,7 @@ select
     o.customer_id,
     o.product_id,
     o.salesperson_id,
+    o.special_offer_id,
     o.territory_id,
     
     -- Metrics

@@ -29,6 +29,8 @@ sources:
         description: "Sales territory lookup table used for geographic analysis."
       - name: specialoffer
         description: "Discount and promotional offer definitions."
+      - name: specialofferproduct
+        description: "Bridge table linking special offers to specific products."
       - name: currencyrate
         description: "Exchange rates used for multi-currency conversion to USD."
       - name: salesorderheadersalesreason
